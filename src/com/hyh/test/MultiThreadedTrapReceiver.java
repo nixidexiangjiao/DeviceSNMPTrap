@@ -47,7 +47,7 @@ public class MultiThreadedTrapReceiver implements CommandResponder {
 		dispatcher = new MultiThreadedMessageDispatcher(threadPool,
 				new MessageDispatcherImpl());
 		listenAddress = GenericAddress.parse(System.getProperty(
-				"snmp4j.listenAddress", "udp:192.168.0.91/162")); // 本地IP与监听端		
+				"snmp4j.listenAddress", "udp:192.168.1.23/162")); // 本地IP与监听端口
 		TransportMapping transport;
 		// 对TCP与UDP协议进行处理
 		if (listenAddress instanceof UdpAddress) {
@@ -72,20 +72,21 @@ public class MultiThreadedTrapReceiver implements CommandResponder {
 		try {
 			init();
 			snmp.addCommandResponder(this);
-			System.out.println("�?��监听Trap信息!");
+			System.out.println("开始监听Trap信息!");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 
 	/**
-	 * 实现CommandResponder的processPdu方法, 用于处理传入的请求�?PDU等信�?	 * 当接收到trap时，会自动进入这个方�?	 * 
+	 * 实现CommandResponder的processPdu方法, 用于处理传入的请求、PDU等信息
+	 * 当接收到trap时，会自动进入这个方法
+	 * 
 	 * @param respEvnt
 	 */
 	public void processPdu(CommandResponderEvent respEvnt) {
 		// 解析Response
         if (respEvnt != null && respEvnt.getPDU() != null) {
-        	System.out.println(respEvnt.getPeerAddress());
         	Vector<VariableBinding> recVBs = respEvnt.getPDU().getVariableBindings();
            	for (int i = 0; i < recVBs.size(); i++) {
             	VariableBinding recVB = recVBs.elementAt(i);

@@ -29,7 +29,8 @@ public class SnmpUtilSendTrap {
 
 	public void initComm() throws IOException {
 
-		// 设置管理进程的IP和端�?		targetAddress = GenericAddress.parse("udp:192.168.0.91/162");
+		// 设置管理进程的IP和端口
+		targetAddress = GenericAddress.parse("udp:192.168.1.23/162");
 		TransportMapping transport = new DefaultUdpTransportMapping();
 		snmp = new Snmp(transport);
 		transport.listen();
@@ -47,7 +48,8 @@ public class SnmpUtilSendTrap {
 		CommunityTarget target = new CommunityTarget();
 		target.setAddress(targetAddress);
 
-		// 通信不成功时的重试次�?		target.setRetries(2);
+		// 通信不成功时的重试次数
+		target.setRetries(2);
 		// 超时时间
 		target.setTimeout(1500);
 		// snmp版本
@@ -61,7 +63,7 @@ public class SnmpUtilSendTrap {
 				new OctetString("JavaEE")));
 		pdu.setType(PDU.TRAP);
 
-		// 向Agent发�?PDU，并接收Response
+		// 向Agent发送PDU，并接收Response
 		ResponseEvent respEvnt = snmp.send(pdu, target);
 
 		// 解析Response
