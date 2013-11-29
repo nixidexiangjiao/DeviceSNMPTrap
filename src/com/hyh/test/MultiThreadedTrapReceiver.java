@@ -16,6 +16,7 @@ import org.snmp4j.security.SecurityProtocols;
 import org.snmp4j.security.USM;
 import org.snmp4j.smi.Address;
 import org.snmp4j.smi.GenericAddress;
+import org.snmp4j.smi.OID;
 import org.snmp4j.smi.OctetString;
 import org.snmp4j.smi.TcpAddress;
 import org.snmp4j.smi.UdpAddress;
@@ -47,7 +48,7 @@ public class MultiThreadedTrapReceiver implements CommandResponder {
 		dispatcher = new MultiThreadedMessageDispatcher(threadPool,
 				new MessageDispatcherImpl());
 		listenAddress = GenericAddress.parse(System.getProperty(
-				"snmp4j.listenAddress", "udp:192.168.1.23/162")); // 本地IP与监听端口
+				"snmp4j.listenAddress", "udp:192.168.0.91/2162")); // 本地IP与监听端口
 		TransportMapping transport;
 		// 对TCP与UDP协议进行处理
 		if (listenAddress instanceof UdpAddress) {

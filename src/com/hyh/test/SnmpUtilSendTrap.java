@@ -30,7 +30,7 @@ public class SnmpUtilSendTrap {
 	public void initComm() throws IOException {
 
 		// 设置管理进程的IP和端口
-		targetAddress = GenericAddress.parse("udp:192.168.1.23/162");
+		targetAddress = GenericAddress.parse("udp:192.168.0.91/2162");
 		TransportMapping transport = new DefaultUdpTransportMapping();
 		snmp = new Snmp(transport);
 		transport.listen();
