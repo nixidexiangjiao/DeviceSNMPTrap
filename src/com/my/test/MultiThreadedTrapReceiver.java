@@ -1,4 +1,4 @@
-package com.hyh.test;
+package com.my.test;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.Vector;
@@ -48,7 +48,7 @@ public class MultiThreadedTrapReceiver implements CommandResponder {
 		dispatcher = new MultiThreadedMessageDispatcher(threadPool,
 				new MessageDispatcherImpl());
 		listenAddress = GenericAddress.parse(System.getProperty(
-				"snmp4j.listenAddress", "udp:192.168.0.91/2162")); // 本地IP与监听端口
+				"snmp4j.listenAddress", "udp:192.168.0.91/162")); // 本地IP与监听端口
 		TransportMapping transport;
 		// 对TCP与UDP协议进行处理
 		if (listenAddress instanceof UdpAddress) {
@@ -88,6 +88,7 @@ public class MultiThreadedTrapReceiver implements CommandResponder {
 	public void processPdu(CommandResponderEvent respEvnt) {
 		// 解析Response
         if (respEvnt != null && respEvnt.getPDU() != null) {
+        	System.out.println(respEvnt.getPeerAddress());
         	Vector<VariableBinding> recVBs = respEvnt.getPDU().getVariableBindings();
            	for (int i = 0; i < recVBs.size(); i++) {
             	VariableBinding recVB = recVBs.elementAt(i);

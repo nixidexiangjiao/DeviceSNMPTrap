@@ -1,4 +1,4 @@
-package com.hyh.test;
+package com.my.test;
 import java.io.IOException;
 import java.util.Vector;
 
@@ -30,7 +30,7 @@ public class SnmpUtilSendTrap {
 	public void initComm() throws IOException {
 
 		// 设置管理进程的IP和端口
-		targetAddress = GenericAddress.parse("udp:192.168.0.91/2162");
+		targetAddress = GenericAddress.parse("udp:192.168.0.91/162");
 		TransportMapping transport = new DefaultUdpTransportMapping();
 		snmp = new Snmp(transport);
 		transport.listen();
@@ -61,6 +61,8 @@ public class SnmpUtilSendTrap {
 				new OctetString("SnmpTrap")));
 		pdu.add(new VariableBinding(new OID(".1.3.6.1.2.3377.10.1.1.1.2"),
 				new OctetString("JavaEE")));
+		pdu.add(new VariableBinding(new OID(".1.3.6.1.4.1.12612.220.11.1.3.0.1"),
+				new OctetString("test_barco")));
 		pdu.setType(PDU.TRAP);
 
 		// 向Agent发送PDU，并接收Response
