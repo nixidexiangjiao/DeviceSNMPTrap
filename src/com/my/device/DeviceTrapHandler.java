@@ -43,7 +43,7 @@ public class DeviceTrapHandler implements IDeviceHandler{
 	}
 
 	@Override
-	public Set<TrapElement> warnningElements() {
+	public Map<String, TrapElement> warnningElements() {
 		// TODO Auto-generated method stub
 		return null;
 	}

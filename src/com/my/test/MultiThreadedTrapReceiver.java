@@ -92,6 +92,7 @@ public class MultiThreadedTrapReceiver implements CommandResponder {
         	Vector<VariableBinding> recVBs = respEvnt.getPDU().getVariableBindings();
            	for (int i = 0; i < recVBs.size(); i++) {
             	VariableBinding recVB = recVBs.elementAt(i);
+            	System.out.println(recVB.getOid().hashCode());
                	System.out.println(recVB.getOid() + " : " + recVB.getVariable());
       		}
 		}
