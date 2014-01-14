@@ -15,6 +15,8 @@ import com.my.pub.DateOperation;
 import com.my.pub.FileOperate;
 
 public abstract class AbstractDeviceHandler implements IDeviceHandler {
+	private static String filePath = "trapdir";
+	
 	private String ip;
 	
 	protected DeviceType type;
@@ -33,6 +35,12 @@ public abstract class AbstractDeviceHandler implements IDeviceHandler {
 			Vector<VariableBinding> recVBs = respEvnt.getPDU().getVariableBindings();
 			for (int i = 0; i < recVBs.size(); i++) {
 				VariableBinding recVB = recVBs.elementAt(i);
+				
+				//记录一切信息,防止遗留trap信息
+				String date = DateOperation.dateToString(new Date(), "yyyy-MM-dd");
+				String content = DateOperation.dateToString(new Date()) + " -- from " + respEvnt.getPeerAddress() + " receive : " + recVB.getOid() + " - " + recVB.getVariable() + "\n";
+				FileOperate.writeFile(filePath + File.separator + date + "_" + type.name()  + "_" + ip + "_original", content, true);
+				
 				String name = findName(recVB.getOid());
 				if (name != null)
 					trapElements.put(name, new TrapElement(name, recVB.getOid(), recVB.getVariable(), true, new Date().getTime()));
@@ -50,7 +58,6 @@ public abstract class AbstractDeviceHandler implements IDeviceHandler {
 	public void outputElements() {
 		// TODO Auto-generated method stub
 		if(!trapElements.isEmpty()){
-			String filePath = "trapdir";
 			String date = DateOperation.dateToString(new Date(), "yyyy-MM-dd");
 			StringBuffer content = new StringBuffer();
 			Set<String> keySet = trapElements.keySet();
